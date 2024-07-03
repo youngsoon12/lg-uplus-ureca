@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        table = document.createElement('table');
+        tr = document.createElement('tr');
+        td = document.createElement('td');
+
+        for (let i = 1; i <= 9; i++) {
+            const tr = document.createElement('tr');
+            table.appendChild(tr);
+            for (let j = 1; j <= 9; j++) {
+                const td = document.createElement('td');
+                if (j >= 2) {
+                    td.innerHTML = j + " * " + i + " = " + i * j + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + "<br>" + "<br>";
+                    tr.appendChild(td);
+                }
+            }
+
+            // document.write("<br>");
+        }
+        document.body.appendChild(table);
+    </script>
+</body>
+
+</html>

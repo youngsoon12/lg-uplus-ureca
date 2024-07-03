@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>심플계산기</title>
+    <style>
+        * {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>심플계산기</h3>
+    <hr>
+    <form name="calcForm">
+        <input name="su1" type="text" onchange="onChange()" id="su1">
+        +
+        <input name="su2" type="text" onchange="onChange()" id="su2">
+        <input type="button" value="계산" onclick="sum()"><br>
+        결과값:
+        <input name="result" type="text" id="result">
+    </form>
+    <button value="나는버튼" id="btn">버튼</button>
+    <script>
+        let a = document.getElementById("su1");
+        let b = document.getElementById("su2");
+        let c = document.getElementById("btn");
+
+
+        let onChange = () => {
+            a = document.getElementById("su1").value;
+            b = document.getElementById("su2").value;
+        }
+
+        let onClick = (e) => {
+            console.log(e.target.value);
+        }
+        c.addEventListener("click", onClick);
+        let sum = () => {
+            return document.getElementById("result").value = parseInt(a) + parseInt(b);
+        }
+    </script>
+</body>
+
+</html>

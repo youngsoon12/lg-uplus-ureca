@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let onClick = () => {
+            if (document.getElementById("imgid").src == "http://127.0.0.1:5500/day0703/wedding.jpg") {
+                document.getElementById("imgid").src = "won.jpg";
+            } else {
+                document.getElementById("imgid").src = "wedding.jpg";
+            }
+        }    
+    </script>
+    <div onClick="onClick()">dsa
+        <img src="won.jpg" alt="" style="width: 500px; height: 500px;" id="imgid">
+    </div>
+</body>
+
+</html>
