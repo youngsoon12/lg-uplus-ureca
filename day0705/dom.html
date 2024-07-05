@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM조작테스트</title>
+    <script>
+        let cnt = 0;
+
+        function urecaPrint() {
+            //미션1
+            //   const d1 = document.getElementById('d1');//d1 자료형: Element
+            //   d1.innerHTML='유레카';
+
+
+            //미션2
+            const d1 = document.getElementById('d1');//d1 자료형: Element
+            const divNode = document.createElement("div");//<div></div>
+            divNode.textContent = `유레카 - ${++cnt} <button>삭제</button>`;
+            divNode.appendChild(txtNode);//<div>유레카</div>
+
+            //문법) 부모노드.appendChild(자식노드);
+            d1.appendChild(divNode);/*
+           <div id="d1">
+             <div>유레카</div>
+             <div>유레카</div>
+             <div>유레카</div>
+           </div>
+           */
+        }
+    </script>
+</head>
+
+<body>
+    <button onclick="urecaPrint()">불금</button><br>
+    <div id="d1"></div>
+</body>
+
+<!-- DOM_mission.html 
+   1. 버튼을 눌렀을때  브라우저에 '유레카'를 출력하시오. 
+
+   2. 버튼을 눌렀을때  브라우저에 '유레카'를 번호와 함께 출력하시오. 
+      유레카-1
+      유레카-2
+      유레카-3
+      유레카-4
+   3. 버튼을 눌렀을때  브라우저에 '유레카'를 번호와 함께 출력하시오.  
+      그리고 텍스트 옆에 '삭제'버튼을 함께 출력하시오.
+
+   4. 두번째 삭제버튼을 눌렀을때  누른 삭제버튼과 함께 
+      옆의 텍스트가 삭제되도록 하시오
+
+    유레카-1 <button>삭제</button> <br>
+    유레카-3 <button>삭제</button> <br>
+    유레카-4 <button>삭제</button> <br>      
+   ================================================== 
+    <button>불금</button><br>
+    유레카-1 <button>삭제</button> <br>
+    유레카-3 <button>삭제</button> <br>
+    유레카-4 <button>삭제</button> <br>
+-->
+
+</html>

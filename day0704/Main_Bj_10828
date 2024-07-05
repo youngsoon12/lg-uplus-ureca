@@ -1,0 +1,68 @@
+const filePath = process.platform === 'linux' ? 
+'/dev/stdin' : 'example.txt';
+const input = require('fs').readFileSync(filePath).toString().trim().split('\n');
+
+let deck = [];
+let ans = [];
+let arr = [];
+let n = input.splice(0, 1);
+input.map((data) => { arr.push(data.replace("\r", '').split(' ')); });
+
+for (let i = 0; i < n; i++){
+
+    switch (arr[i][0]) {
+        case 'push_front': {
+            deck.unshift(arr[i][1]);
+            break;
+        }
+        case 'push_back': {
+            deck.push(arr[i][1]);
+            break;
+        }
+        case 'pop_front': { 
+            if (deck.length === 0) {
+                ans.push(-1);
+            } else {
+                ans.push(deck.shift());
+            }
+            break;
+        }
+        case 'pop_back': {
+            if (deck.length === 0) {
+                ans.push(-1);
+            } else {
+                ans.push(deck.pop());
+            }
+             break;
+        }
+        case 'size': {
+            ans.push(deck.length);
+            break;
+        }
+        case 'empty': {
+            if (deck.length === 0) {
+                ans.push(1);
+            } else {
+                ans.push(0);
+            }
+            break;
+        }
+        case 'front': {
+            if (deck.length === 0) {
+                ans.push(-1);
+            } else { 
+                ans.push(deck[0]);
+            }
+            break;
+        }
+        
+        case 'back': {
+            if (deck.length === 0) {
+                ans.push(-1);
+            } else { ans.push(deck[deck.length - 1]); }
+            break;
+        }
+    }
+}
+
+console.log(ans.join('\n'));
