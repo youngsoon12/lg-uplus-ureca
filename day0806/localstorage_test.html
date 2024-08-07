@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="result"></div>
+    <div id="result2"></div>
+    <script>
+      let init = (() => {
+        //localStorage에 데이터 저장하기 3가지
+        // localStorage.username = "wasingsiae";
+        // localStorage.username = "change";
+        localStorage.username = "이효린";
+
+        let user = {
+          id: "youngsoo",
+          age: 10,
+        };
+        localStorage.setItem("user", JSON.stringify(user));
+        let userName = localStorage.getItem("username");
+        document.querySelector("#result").innerHTML = `username : ${userName}`;
+        let userInfo = localStorage.getItem("user");
+        document.querySelector("#result2").innerHTML += JSON.stringify(
+          JSON.parse(userInfo)
+        );
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 1000px;
+        margin: 0 auto;
+      }
+      .title {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .btn-create {
+        background-color: rgb(188, 165, 210);
+        border-radius: 5px;
+        width: 75px;
+        height: 40px;
+        font-size: 15px;
+        color: rgb(141, 0, 141);
+        box-shadow: 15ch;
+        border: 1px solid white;
+        cursor: pointer;
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .btn-create:hover {
+        background-color: violet;
+        transform: scale(1.2);
+      }
+      .content {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 20px;
+        width: 50vw;
+        height: 20vh;
+        background-color: #d3d3d3;
+      }
+      .content div {
+        width: 75px;
+        height: 75px;
+        background-color: rgb(252, 252, 163);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 30px;
+        color: white;
+      }
+      .content-log {
+        margin: 35px;
+        background-color: #e7d4d4;
+        min-width: 50vw;
+        min-height: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">이번주 로또 예상 번호</h1>
+      <button class="btn-create" onclick="mathRandom()">번호 생성</button>
+      <div class="content">
+        <div class="num0"></div>
+        <div class="num1"></div>
+        <div class="num2"></div>
+        <div class="num3"></div>
+        <div class="num4"></div>
+        <div class="num5"></div>
+      </div>
+      <div class="content-log"></div>
+      <div class="prac"></div>
+      
+    <script>
+      let mathRandom = () => {
+        let numbers = [];
+        
+        for (let i = 0; i < 6; i++) {
+          let random = Math.floor(Math.random() * 45) + 1;
+          numbers.push(random);
+        }
+        numbers.sort((a, b) => a - b);
+        const content = document.querySelector(".content");
+        for (let i = 0; i < numbers.length; i++) {
+          let numDiv = document.querySelector(`.num${i}`);
+          if (numbers[i] > 40) {
+            numDiv.style.backgroundColor = "pink";
+          } else if (numbers[i] > 30) numDiv.style.backgroundColor = "skyblue";
+          else if (numbers[i] > 20) numDiv.style.backgroundColor = "green";
+          else if (numbers[i] > 10) numDiv.style.backgroundColor = "blue";
+          else numDiv.style.backgroundColor = "red";
+          numDiv.innerHTML = numbers[i];
+        }
+        let date = new Date();
+        let time =
+          date.getFullYear() +
+          "-" +
+          date.getMonth() +
+          "-" +
+          date.getDate() +
+          " " +
+          date.getHours() +
+          ":" +
+          date.getMinutes() +
+          ":" +
+          date.getSeconds();
+
+        let cnt = localStorage.getItem("cnt") ? localStorage.getItem("cnt") : 0;
+        cnt++;
+        localStorage.setItem("cnt", cnt);
+
+        let lottoInfo = localStorage.getItem("lottoInfo")
+          ? JSON.parse(localStorage.getItem("lottoInfo"))
+          : {};
+
+        lottoInfo[cnt] = numbers;
+        localStorage.setItem("lottoInfo", JSON.stringify(lottoInfo));
+        let lottoTime = localStorage.getItem("lottoTime")
+          ? JSON.parse(localStorage.getItem("lottoTime"))
+          : {};
+        lottoTime[cnt] = time;
+        localStorage.setItem("lottoTime", JSON.stringify(lottoTime));
+        let logDiv = document.querySelector(".content-log");
+        logDiv.innerHTML = "";
+        for (let i in lottoInfo) {
+          let logDivJr = document.createElement("div");
+          logDivJr.innerHTML = `${lottoTime[i]} [${lottoInfo[i].join(" ")}]`;
+          logDiv.appendChild(logDivJr);
+        }
+      };
+      let div = document.querySelector(".prac");
+      div.innerHTML = ``;
+    </script>
+  </body>
+</html>

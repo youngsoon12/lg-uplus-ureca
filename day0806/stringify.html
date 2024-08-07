@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h3>stringify테스트</h3>
+    <script>
+      let user = {
+        userid: "gildong",
+        username: "홍길동",
+        age: 30,
+        seolleung: { area: "서울", class: 10 },
+        student: ["김유레", "홍유레", "최유레"],
+        profile: null,
+      };
+      console.dir(user);
+      let userStr = JSON.stringify(user);
+      console.log(userStr);
+      console.log(user);
+    </script>
+  </body>
+</html>
