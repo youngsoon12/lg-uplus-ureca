@@ -2,7 +2,11 @@ import React from "react";
 import Counter2 from "./dy0812/Counter2";
 import TextInputWithFocusButton from './dy0812/TextInputWithFocusButton';
 import Accommodate from './dy0812/Accommodate';
-import MyMemo from "./dy0812/MyMemo";
+import MyMemo from "./dy0813/MyMemo";
+import MyTimer from "./dy0813/MyTimer";
+import MyToggle from "./dy0813/MyToggle";
+import CheckBtn from "./dy0813/CheckBtn";
+import NumberGame from "./dy0813/NumberGame";
 
 function App() {
   return (
@@ -10,7 +14,12 @@ function App() {
       {/* <Counter2 /> */}
       {/* <TextInputWithFocusButton/> */}
       {/* <Accommodate /> */}
-      <MyMemo / >
+      {/* <MyMemo / > */}
+      {/* <MyTimer /> */}
+      {/* <MyMemo /> */}
+      {/* <MyToggle /> */}
+      {/* <CheckBtn /> */}
+      <NumberGame />
     </div>
   );
 }
