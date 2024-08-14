@@ -7,6 +7,7 @@ import MyTimer from "./dy0813/MyTimer";
 import MyToggle from "./dy0813/MyToggle";
 import CheckBtn from "./dy0813/CheckBtn";
 import NumberGame from "./dy0813/NumberGame";
+import LoginControl from "./dy0814/LoginControl";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       {/* <MyToggle /> */}
       {/* <CheckBtn /> */}
       <NumberGame />
+      {/* {<LoginControl  />} */}
     </div>
   );
 }

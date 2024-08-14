@@ -1,31 +1,72 @@
 import { useState, useRef, useEffect } from "react";
-const random = Math.floor(Math.random() * 100) + 1;
 const NumberGame = (): JSX.Element => {
+  const [random, setRandom] = useState<number>(Math.floor(Math.random() * 100) + 1);
   const text = useRef<HTMLInputElement>(null);
-  const [textArea, setTextArea] = useState<string>("");
+  const [log, setLog] = useState<any>({
+    cnt: 1,
+    num: [],
+    result: [],
+  });
+
+  const onKeyUp = (e: any) => {
+    if (e.key === "Enter") {
+      checkAnswer(e);
+    }
+  };
 
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (text.current) {
-      console.log(text.current.value);
       if (text.current.value === String(random)) {
-        setTextArea("정답입니다.");
+        setLog({
+          cnt: log.cnt + 1,
+          num: [...log.num, text.current.value],
+          result: [...log.result, "정답입니다"],
+        });
       } else if (Number(text.current.value) > random) {
-        setTextArea("낮추세요");
+        setLog({
+          cnt: log.cnt + 1,
+          num: [...log.num, text.current.value],
+          result: [...log.result, "낮춰주세요"],
+        });
       } else if (Number(text.current.value) < random) {
-        setTextArea("높여요");
+        setLog({
+          cnt: log.cnt + 1,
+          num: [...log.num, text.current.value],
+          result: [...log.result, "올려주세요"],
+        });
       }
       text.current.value = "";
     }
   };
-
+  const startNewGame = () => {
+    setRandom(Math.floor(Math.random() * 100) + 1);
+    setLog({ cnt: 1, num: [], result: [] }); // 로그 초기화
+  };
   return (
     <div>
       <h1>숫자맞추기</h1>
-      {random}
       <p>1 ~ 100사이 컴퓨터의 숫자를 맞춰보세요.</p>
-      <input type="number" min="1" max="100" style={{ width: "100px" }} ref={text} />
-      <button onClick={checkAnswer}>정답확인</button>
-      <div>{textArea}</div>
+      <div>{log.cnt}번째 시도</div>
+      <input
+        type="number"
+        min="1"
+        max="100"
+        style={{ width: "100px" }}
+        ref={text}
+        onKeyDown={onKeyUp}
+      />
+      <button onClick={checkAnswer}>정답확인</button>{" "}
+      <button onClick={startNewGame}>새로운게임 시작</button>
+      <ul>
+        {log.num &&
+          log.num.map((data: any, idx: number) => {
+            return (
+              <li key={idx}>
+                {idx + 1}번째 시도 [{data}] {log.result[idx]}
+              </li>
+            );
+          })}
+      </ul>
     </div>
   );
 };
