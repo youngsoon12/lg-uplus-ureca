@@ -8,6 +8,9 @@ import MyToggle from "./dy0813/MyToggle";
 import CheckBtn from "./dy0813/CheckBtn";
 import NumberGame from "./dy0813/NumberGame";
 import LoginControl from "./dy0814/LoginControl";
+import AttendanceBook from "./dy0816/AttendanceBook";
+import SignUp from "./dy0816/SignUp";
+import MyNumberGuess3 from "./dy0816/MyNumberGuess3";
 
 function App() {
   return (
@@ -20,8 +23,11 @@ function App() {
       {/* <MyMemo /> */}
       {/* <MyToggle /> */}
       {/* <CheckBtn /> */}
-      <NumberGame />
+      {/* <NumberGame /> */}
       {/* {<LoginControl  />} */}
+      {/* {<AttendanceBook />} */}
+      {/* {<SignUp />} */}
+      {<MyNumberGuess3 />}
     </div>
   );
 }
