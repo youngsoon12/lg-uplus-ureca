@@ -12,7 +12,6 @@ function MyNumberGuess3(props: any) {
   const [btnAct, setBtnAct] = useState<boolean>(true);
   const [tryCount, setTryCount] = useState<any>(0); //시도횟수
   const [tryHistory, setTryHistory] = useState<any>([]); //시도이력
-  const [tryAnswer, setTryAnswer] = useState<any>([]);
   let historyStr = `${tryCount}번째 시도 [${user_num}]: `;
   useEffect(() => {
     setTryCount(tryCount + 1);
@@ -33,7 +32,6 @@ function MyNumberGuess3(props: any) {
       //정답
       historyStr = `${historyStr} 정답입니다^O^`;
     }
-    setTryAnswer([...tryAnswer, tryCount]);
     setUser_num(""); //사용자 입력값 지우기
     setResult(historyStr);
     setTryHistory([historyStr, ...tryHistory]); //시도한 결과 문자열을 배열에 저장(히스토리 남김)
@@ -83,6 +81,7 @@ function MyNumberGuess3(props: any) {
       <button onClick={newGame} disabled={btnAct}>
         새게임
       </button>
+      <button>로그확인</button>
       {/* <인라인 if>
             형식) 조건식 && 표현식
                   true  ==> 표현식

@@ -11,24 +11,34 @@ import LoginControl from "./dy0814/LoginControl";
 import AttendanceBook from "./dy0816/AttendanceBook";
 import SignUp from "./dy0816/SignUp";
 import MyNumberGuess3 from "./dy0816/MyNumberGuess3";
+import Context from "./dy0819/Context";
+import { CountProvider } from './dy0819/ContextAPI/CountContext';
+import A from "./dy0819/A";
+import WelcomeDialog from "./dy0819/WelcomeDialog";
 
+// Context 생성
 function App() {
   return (
-    <div className="App">
-      {/* <Counter2 /> */}
-      {/* <TextInputWithFocusButton/> */}
-      {/* <Accommodate /> */}
-      {/* <MyMemo / > */}
-      {/* <MyTimer /> */}
-      {/* <MyMemo /> */}
-      {/* <MyToggle /> */}
-      {/* <CheckBtn /> */}
-      {/* <NumberGame /> */}
-      {/* {<LoginControl  />} */}
-      {/* {<AttendanceBook />} */}
-      {/* {<SignUp />} */}
-      {<MyNumberGuess3 />}
-    </div>
+    <CountProvider>
+      <div className="App">
+        {/* <Counter2 /> */}
+        {/* <TextInputWithFocusButton/> */}
+        {/* <Accommodate /> */}
+        {/* <MyMemo / > */}
+        {/* <MyTimer /> */}
+        {/* <MyMemo /> */}
+        {/* <MyToggle /> */}
+        {/* <CheckBtn /> */}
+        {/* <NumberGame /> */}
+        {/* {<LoginControl  />} */}
+        {/* {<AttendanceBook />} */}
+        {/* {<SignUp />} */}
+        {/* {<MyNumberGuess3 />}/ */}
+        {/* <Context /> */}
+        {/* <A /> */}
+        {<WelcomeDialog />}
+      </div>
+    </CountProvider>
   );
 }
 
