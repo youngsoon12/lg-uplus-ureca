@@ -12,9 +12,12 @@ import AttendanceBook from "./dy0816/AttendanceBook";
 import SignUp from "./dy0816/SignUp";
 import MyNumberGuess3 from "./dy0816/MyNumberGuess3";
 import Context from "./dy0819/Context";
-import { CountProvider } from './dy0819/ContextAPI/CountContext';
+import { CountContext, CountProvider } from "./dy0819/ContextAPI/CountContext";
 import A from "./dy0819/A";
 import WelcomeDialog from "./dy0819/WelcomeDialog";
+import MyApp from "./dy0820/MyApp";
+import MyButtonCounter from "./dy0820/MyButtonCounter";
+import MyCalc from "./dy0820/MyCalc";
 
 // Context 생성
 function App() {
@@ -36,7 +39,10 @@ function App() {
         {/* {<MyNumberGuess3 />}/ */}
         {/* <Context /> */}
         {/* <A /> */}
-        {<WelcomeDialog />}
+        {/* {<WelcomeDialog />} */}
+        {/* <MyApp /> */}
+        {/* <MyButtonCounter /> */}
+        {<MyCalc />}
       </div>
     </CountProvider>
   );
