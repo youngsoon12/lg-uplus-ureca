@@ -9,8 +9,14 @@ const MyText2 = atom({
     text: "리코일입니다",
   },
 });
+const MyText3 = atom({
+  key: "message",
+  default: {
+    text: "리코일입니다",
+  },
+});
 export const MyApp = () => {
-  const a = "안녕하세요";
+  const a = "이지영입니다";
   //전달데이터 => "쉬는 시간"
   return (
     <RecoilRoot>
@@ -24,6 +30,9 @@ export const MyApp = () => {
 };
 
 const GrandParent = ({ value }) => {
+  const jiyoung = useContext(MyText);
+  console.log(value);
+  console.log(jiyoung);
   return <Parent value={value} />;
 };
 
@@ -37,6 +46,7 @@ const Child = ({ value }) => {
 
 const GrandChild = ({ value }) => {
   const t = useContext(MyText);
+  console.log(t);
   const [a, setA] = useState(t);
   const t2 = useRecoilValue(MyText2);
   const [t3, setT3] = useRecoilState(MyText2);

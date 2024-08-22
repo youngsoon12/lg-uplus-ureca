@@ -10,7 +10,7 @@ const Numbers = atom({
     result: 0,
     togle: false,
   },
-});
+})
 
 export const MyCalc = () => {
   return (
@@ -21,7 +21,6 @@ export const MyCalc = () => {
           justifyContent: "center",
           flexDirection: "column",
           alignItems: "center",
-
           width: "800px",
           margin: "0 auto",
           minHeight: "100vh",
@@ -67,7 +66,7 @@ const CalcBody = () => {
         break;
       case "-":
         result = Number(num.num1) - Number(num.num2);
-        break;
+        break
       case "*":
         result = Number(num.num1) * Number(num.num2);
         break;
@@ -77,6 +76,7 @@ const CalcBody = () => {
       default:
         result = 0; // or handle invalid operations as needed
     }
+
     setNum({ ...num, result, togle: true });
   };
 
