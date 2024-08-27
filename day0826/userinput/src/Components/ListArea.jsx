@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -7,30 +7,62 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Button,
+  Input,
 } from "@mui/material";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import listSwitch from "./ToggleAtom";
-import { Button } from "@mui/material";
 import Modal from "react-modal";
+import { EditBtn } from "./InputBtn";
+
+const users = [
+  { label: "이름", name: "name" },
+  { label: "나이", name: "age" },
+  { label: "직업", name: "job" },
+];
 
 const ListArea = () => {
   const [userData, setUserData] = useState(
     () => JSON.parse(localStorage.getItem("userList")) || []
   );
   const [modalSwitch, setModalSwitch] = useState(false);
+  const [currentEditIndex, setCurrentEditIndex] = useState(null);
   const listToggle = useRecoilValue(listSwitch);
 
   useEffect(() => {
-    // 리스트가 변경될 때마다 로컬 스토리지에서 사용자 데이터를 가져옴
     setUserData(JSON.parse(localStorage.getItem("userList")) || []);
   }, [listToggle]);
 
   const handleDelete = (idx) => {
     const updatedUserData = userData.filter((_, index) => index !== idx);
     setUserData(updatedUserData);
-    localStorage.setItem("userList", JSON.stringify(updatedUserData)); // 로컬 스토리지 업데이트
+    localStorage.setItem("userList", JSON.stringify(updatedUserData));
+  };
+
+  const handleEditClick = (idx) => {
+    // 모달이 이미 열려있다면 종료
+    if (modalSwitch && currentEditIndex === idx) {
+      return;
+    }
+
+    setCurrentEditIndex(idx);
+    setModalSwitch(true);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserData((prevData) => {
+      const newData = [...prevData];
+      newData[currentEditIndex][name] = value;
+      localStorage.setItem("userList", JSON.stringify(newData));
+      return newData;
+    });
+  };
+
+  const closeModal = () => {
+    setModalSwitch(false);
+    setCurrentEditIndex(null);
   };
 
   return (
@@ -55,18 +87,10 @@ const ListArea = () => {
                   <TableCell>{row.age}</TableCell>
                   <TableCell>{row.job}</TableCell>
                   <TableCell>
-                    <Button
-                      sx={{ color: "grey" }}
-                      onClick={() => {
-                        setModalSwitch((prev) => !prev);
-                      }}
-                    >
+                    <Button sx={{ color: "grey" }} onClick={() => handleEditClick(idx)}>
                       수정
                     </Button>
-                    <Button
-                      sx={{ color: "grey" }}
-                      onClick={() => handleDelete(idx)} // 삭제 버튼 클릭 시 handleDelete 호출
-                    >
+                    <Button sx={{ color: "grey" }} onClick={() => handleDelete(idx)}>
                       삭제
                     </Button>
                   </TableCell>
@@ -76,15 +100,36 @@ const ListArea = () => {
           </Table>
         </TableContainer>
       )}
-      <Modal isOpen={modalSwitch} onRequestClose={() => setModalSwitch(false)} style={customStyles}>
-      나 오혜령인데 바보다?
-          </Modal>
+
+      <Modal
+        isOpen={modalSwitch}
+        onRequestClose={closeModal}
+        style={customStyles}
+        ariaHideApp={false}
+      >
+        <InputContainer>
+          {users.map(({ label, name }, idx) => (
+            <InputArea key={idx}>
+              <InputLabel>{label}</InputLabel>
+              <Input
+                type="text"
+                sx={{ width: "200px", fontSize: "16px", padding: "10px 0px 5px 10px" }}
+                name={name}
+                value={currentEditIndex !== null ? userData[currentEditIndex][name] : ""}
+                onChange={handleInputChange}
+              />
+            </InputArea>
+          ))}
+          <EditBtn onClick={closeModal} />
+        </InputContainer>
+      </Modal>
     </Wrap>
   );
 };
 
 export default ListArea;
 
+// Styled components
 const Wrap = styled.div`
   display: flex;
   justify-content: center;
@@ -95,8 +140,25 @@ const Wrap = styled.div`
 
 const customStyles = {
   content: {
-    width: "300px", // 원하는 너비 설정
+    width: "300px",
     height: "300px",
-    margin: "auto", // 중앙 정렬
+    margin: "auto",
   },
 };
+
+const InputLabel = styled.label`
+  margin: 15px;
+`;
+
+const InputArea = styled.div`
+  margin-right: 20px;
+`;
+
+const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  height: 90%;
+`;

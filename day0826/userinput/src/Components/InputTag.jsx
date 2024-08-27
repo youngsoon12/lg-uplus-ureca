@@ -27,7 +27,7 @@ const InputTag = () => {
   };
 
   const submitClick = () => {
-    const updatedUserList = [...userList, user];
+    const updatedUserList = [...JSON.parse(localStorage.getItem("userList")), user];
     setUserList(updatedUserList);
       localStorage.setItem("userList", JSON.stringify(updatedUserList)); // 사용자 목록을 로컬 스토리지에 저장
     setUser({ name: "", age: "", job: "" });
