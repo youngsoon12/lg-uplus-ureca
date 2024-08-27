@@ -15,6 +15,7 @@ import { useRecoilValue } from "recoil";
 import listSwitch from "./ToggleAtom";
 import Modal from "react-modal";
 import { EditBtn } from "./InputBtn";
+import axios from "axios";
 
 const users = [
   { label: "이름", name: "name" },
@@ -23,46 +24,61 @@ const users = [
 ];
 
 const ListArea = () => {
-  const [userData, setUserData] = useState(
-    () => JSON.parse(localStorage.getItem("userList")) || []
-  );
+  const [dbData, setDbData] = useState([]);
   const [modalSwitch, setModalSwitch] = useState(false);
   const [currentEditIndex, setCurrentEditIndex] = useState(null);
+  const [editData, setEditData] = useState({ name: "", age: "", job: "" });
   const listToggle = useRecoilValue(listSwitch);
 
   useEffect(() => {
-    setUserData(JSON.parse(localStorage.getItem("userList")) || []);
+    axios.get("http://localhost:8080/person/list").then((res) => {
+      setDbData(res.data);
+    });
   }, [listToggle]);
 
-  const handleDelete = (idx) => {
-    const updatedUserData = userData.filter((_, index) => index !== idx);
-    setUserData(updatedUserData);
-    localStorage.setItem("userList", JSON.stringify(updatedUserData));
+  const handleDelete = async (idx) => {
+    try {
+      const idToDelete = dbData[idx].no; // 삭제할 ID 가져오기
+      // 삭제 요청 보내기
+      await axios.delete(`http://localhost:8080/person/delete?no=${idToDelete}`);
+
+      // 삭제 후 UI 업데이트
+      const updatedData = dbData.filter((_, index) => index !== idx);
+      setDbData(updatedData);
+    } catch (error) {
+      console.error("Error deleting data:", error.response?.data || error.message);
+    }
   };
 
   const handleEditClick = (idx) => {
-    // 모달이 이미 열려있다면 종료
-    if (modalSwitch && currentEditIndex === idx) {
-      return;
-    }
-
     setCurrentEditIndex(idx);
+    setEditData({ ...dbData[idx] }); // Edit Data 초기화
     setModalSwitch(true);
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUserData((prevData) => {
-      const newData = [...prevData];
-      newData[currentEditIndex][name] = value;
-      localStorage.setItem("userList", JSON.stringify(newData));
-      return newData;
-    });
+    setEditData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
-  const closeModal = () => {
-    setModalSwitch(false);
-    setCurrentEditIndex(null);
+  const closeModal = async () => {
+    try {
+      await axios.put(`http://localhost:8080/person/upform?no=${editData.no}`, editData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const updatedData = [...dbData];
+      updatedData[currentEditIndex] = editData;
+      setDbData(updatedData);
+      setModalSwitch(false);
+      setCurrentEditIndex(null);
+    } catch (error) {
+      console.error("Error updating data:", error);
+    }
   };
 
   return (
@@ -80,7 +96,7 @@ const ListArea = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {userData.map((row, idx) => (
+              {dbData.map((row, idx) => (
                 <TableRow key={idx}>
                   <TableCell>{idx + 1}</TableCell>
                   <TableCell>{row.name}</TableCell>
@@ -103,7 +119,7 @@ const ListArea = () => {
 
       <Modal
         isOpen={modalSwitch}
-        onRequestClose={closeModal}
+        onRequestClose={() => setModalSwitch(false)}
         style={customStyles}
         ariaHideApp={false}
       >
@@ -115,7 +131,7 @@ const ListArea = () => {
                 type="text"
                 sx={{ width: "200px", fontSize: "16px", padding: "10px 0px 5px 10px" }}
                 name={name}
-                value={currentEditIndex !== null ? userData[currentEditIndex][name] : ""}
+                value={editData[name] || ""}
                 onChange={handleInputChange}
               />
             </InputArea>
@@ -140,9 +156,10 @@ const Wrap = styled.div`
 
 const customStyles = {
   content: {
-    width: "300px",
-    height: "300px",
+    width: "280px",
+    height: "180px",
     margin: "auto",
+    padding: "30px",
   },
 };
 

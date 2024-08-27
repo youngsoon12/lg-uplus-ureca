@@ -4,12 +4,14 @@ import styled from "styled-components";
 import InputBtn, { ListBtn } from "./InputBtn";
 import { useRecoilState } from "recoil";
 import listSwitch from "./ToggleAtom";
+import axios from "axios"; // axios 임포트
 
 const users = [
   { label: "이름", name: "name" },
   { label: "나이", name: "age" },
   { label: "직업", name: "job" },
 ];
+
 const InputTag = () => {
   const [user, setUser] = useState({
     name: "",
@@ -26,13 +28,22 @@ const InputTag = () => {
     setUser({ ...user, [name]: value });
   };
 
-  const submitClick = () => {
-    const updatedUserList = [...JSON.parse(localStorage.getItem("userList")), user];
-    setUserList(updatedUserList);
-      localStorage.setItem("userList", JSON.stringify(updatedUserList)); // 사용자 목록을 로컬 스토리지에 저장
-    setUser({ name: "", age: "", job: "" });
-  };
+  const submitClick = async () => {
+    console.log(user);
+    try {
+      // 서버로 POST 요청 보내기
+      const response = await axios.post("http://localhost:8080/person/form", user);
 
+      // POST 요청이 성공하면 사용자 데이터를 로컬 스토리지에 저장
+      const updatedUserList = [...userList, response.data]; // response.data는 서버에서 반환한 데이터를 가정
+      setUserList(updatedUserList);
+      localStorage.setItem("userList", JSON.stringify(updatedUserList)); // 사용자 목록을 로컬 스토리지에 저장
+      setUser({ name: "", age: "", job: "" });
+    } catch (error) {
+      console.error("POST 요청 중 오류 발생:", error);
+    }
+  };
+  console.log(user);
   useEffect(() => {
     setListToggle({ ...listToggle, update: listToggle.update });
   }, [userList]);
