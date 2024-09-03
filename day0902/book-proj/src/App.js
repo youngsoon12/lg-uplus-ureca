@@ -1,13 +1,15 @@
 import styled from "styled-components";
 import "./App.css";
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ButtonMenu from "pages/ButtonMenu";
 import LoginForm from "pages/LoginForm";
-import EditUserInfo from "pages/EditUserInfo";
-import RegistUser from "pages/RegistUser";
-import UserList from "pages/UserList";
+import EditBookInfo from "pages/EditBookInfo";
+import RegistBook from "pages/RegistBook";
+
 import Header from "pages/Header";
 import { useState } from "react";
+import BookList from "pages/BookList";
+
 function App() {
   const [login, setLogin] = useState(false);
   const [name, setName] = useState("");
@@ -17,9 +19,9 @@ function App() {
       <Header login={login} setLogin={setLogin} name={name} />
       <Routes>
         <Route path="/" element={<ButtonMenu />} />
-        <Route path="/list" element={<UserList />} />
-        <Route path="/regist" element={<RegistUser />} />
-        <Route path="/edit/:userId" element={<EditUserInfo />} />
+        <Route path="/list" element={<BookList />} />
+        <Route path="/regist" element={<RegistBook />} />
+        <Route path="/edit/:userId" element={<EditBookInfo />} />
         <Route
           path="/loginform"
           element={

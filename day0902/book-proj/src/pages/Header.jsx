@@ -49,7 +49,10 @@ const Header = ({ login,setLogin,name}) => {
       <Login>
         {(!login)? 
         <button onClick={()=>navigate(ROUTE.LOGINFORM)}>로그인</button> :
-          <span>{name}님 반갑습니다. <button onClick={() => { setLogin(false); }}>로그아웃</button></span>
+          <span>{name}님 반갑습니다. <button onClick={() => { 
+            setLogin(false);
+            sessionStorage.removeItem("member");
+           }}>로그아웃</button></span>
         }
       </Login>  
     </HeaderContainer>
